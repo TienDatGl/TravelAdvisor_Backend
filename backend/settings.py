@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,12 +48,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'oauth2_provider',
     'corsheaders',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'storages'
+
 ]
 
 REST_FRAMEWORK = {'DEFAULT_PAGINATION_CLASS':
                   'rest_framework.pagination.PageNumberPagination',
-                  'PAGE_SIZE': '10',
+                  'PAGE_SIZE': '5',
                   'DEFAULT_AUTHENTICATION_CLASSES': (
                       'rest_framework.authentication.SessionAuthentication',
                       'rest_framework.authentication.TokenAuthentication',
@@ -84,7 +91,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3001",
     "http://localhost:3000"# Thay đổi thành miền của ứng dụng React của bạn
 ]
 
@@ -118,7 +125,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capdb',
+        'NAME': 'tadb',
         'USER': 'root',
         'PASSWORD': '12345678',
         'HOST': ''
@@ -164,7 +171,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AWS_ACCESS_KEY_ID = 'AKIAUCMYFMTRLS5SLV7U'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'traveladvisor'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
